@@ -6,7 +6,7 @@ I really hope this would be useful to the Doctors and Medical professionals to h
 # How To Use
 1. Install all the requirements by using the following code while in the current directory<br>
 ```pip install -r requirements.txt```<br>
-2. Execute the <a href=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/Predict.py>Predict.py</a> file through the terminal or your preferred IDE.
+2. Execute the <a href=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/Predict.py>Predict.py</a> file through the terminal or your preferred IDE, give the path to the folder containing the images and done!
 
 # Model Architecture
 ![alt text](https://github.com/DarshanDeshpande/Ultimate-COVD-19-Detector/blob/master/ModelArchitecture.png)
