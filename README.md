@@ -15,4 +15,4 @@ I would appreciate it if this model is tested on further data because for now th
 # DATA USED <br>
   1. <a href=https://github.com/ieee8023/covid-chestxray-dataset>COVID-19 Xray images</a>
   2. <a href=https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia>Paul Mooney's Amazing Pneumonia Dataset</a>
-  3. Link to all images and TFRecord files used for training, vallidation and testing can be found here on my drive -> https://drive.google.com/open?id=1fChdCB9uJgxHGeKTdhP1QEtO3EQ1uFRO
+  3. Link to all images and TFRecord files used for training, validation and testing can be found here on my drive -> https://drive.google.com/open?id=1fChdCB9uJgxHGeKTdhP1QEtO3EQ1uFRO
