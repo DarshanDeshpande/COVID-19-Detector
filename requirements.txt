@@ -1,0 +1,4 @@
+tensorflow==2.1.0
+numpy
+glob
+pip install opencv-python
