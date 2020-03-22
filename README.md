@@ -10,9 +10,9 @@ I would appreciate it if this model is tested on further data because for now th
 2. Execute the <a href=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/Predict.py>Predict.py</a> file through the terminal or your preferred IDE, give the path to the folder containing the images and done!
 
 # Model Architecture
-![alt text](https://github.com/DarshanDeshpande/Ultimate-COVD-19-Detector/blob/master/ModelArchitecture.png)
+![Model Architecture](https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/ModelArchitecture.jpg)
 
 # DATA USED <br>
   1. <a href=https://github.com/ieee8023/covid-chestxray-dataset>COVID-19 Xray images</a>
   2. <a href=https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia>Paul Mooney's Amazing Pneumonia Dataset</a>
-  3. Link to all images and TFRecord files used for training, validation and testing can be found here on my drive -> https://drive.google.com/open?id=1fChdCB9uJgxHGeKTdhP1QEtO3EQ1uFRO
+  3. Link to all images and TFRecord files used for training, validation and testing can be found here on my drive -> https://drive.google.com/open?id=1rxznEYJljIy8tpKyDitraHRXdlfn1n7u
