@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import os,cv2,glob
 
-model = tf.keras.models.load_model('COVID-19-Detector-1.h5')
+model = tf.keras.models.load_model('COVID-19-Detector.h5')
 class_list = ['Normal','COVID-19','Bacterial Pneumonia']
 
 
