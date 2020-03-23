@@ -3,13 +3,13 @@ The World's best Doctors are currently working on finding and testing the cure t
 In this matter, the biggest task for a machine to classify COVID would be to differentiate between a Bacterial Pneumonia and a Viral pneumonia like COVID-19's because both of their symptoms are similar upto a large extent. So here I am showing you my ML model which can differentiate betweeen a normal person, a person with bacterial pneumonia and a person with COVID-19.<br>
 There is also a model for binary classification for COVID-19 Diagnostics made research purposes but works just as well if not better.
 # Testing scores(All metrics are weighted because of the intial class imbalance):
-Binary Classification<br>
+<b>Binary Classification</b><br>
    1.<b>Accuracy</b>- 0.9621318373071529 <br>
    2. <b>Precision</b>- 0.9629629629629629 <br>
    3. <b>Recall</b>- 0.9629629629629629 <br>
    4. <b>F1-Score</b> - 0.9629629629629629 <br>
    5. <b>AUC</b> - 0.9621318373071529 <br><br>
-   Multi-Label Classification<br>
+   <b>Multi-Label Classification</b><br>
    1.<b>Accuracy</b>- 0.8564749883122955 <br>
    2. <b>Precision</b>- 0.8774582560296846 <br>
    3. <b>Recall</b>- 0.8311688311688312 <br>
