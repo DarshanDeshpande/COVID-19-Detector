@@ -1,7 +1,7 @@
 # COVID-19-Detector
 The World's best Doctors are currently working on finding and testing the cure to the COVID-19 virus. In the middle of all of this, some countries are unable to find testing kits for the virus, making it really difficult to curb it's spread. In the hopes of helping and contributing an easier detection method, I recently got my hands on a X-Ray Dataset of COVID-19 patients(Huge thanks to <a href=https://github.com/ieee8023>ieee8023</a>). <br>
 In this matter, the biggest task for a machine to classify COVID would be to differentiate between a Bacterial Pneumonia and a Viral pneumonia like COVID-19's because both of their symptoms are similar upto a large extent. So here I am showing you my ML model which can differentiate betweeen a normal person, a person with bacterial pneumonia and a person with COVID-19.<br>
-There is also a model for binary classification for COVID-19 Diagnostics made research purposes but works just as well if not better.
+There is also a model for binary classification for COVID-19 Diagnostics made for research purposes but works just as well if not better.
 # Testing scores(All metrics are weighted because of the intial class imbalance):
 <b>Binary Classification</b><br>
    1.<b>Accuracy</b>- 0.9621318373071529 <br>
@@ -26,7 +26,7 @@ I would appreciate it if this model is tested on further data because for now th
 2. Execute the <a href=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/Predict.py>Predict.py</a> file through the terminal or your preferred IDE, give your choice of Classification and path of the directory. Done!<br>
 ```
 1. 'Binary' for Binary Classification
-2. 'Multi-Label' for Multi-Class Classification <br>
+2. 'Multi-Label' for Multi-Class Classification 
 ```
 
 # Model Architecture
