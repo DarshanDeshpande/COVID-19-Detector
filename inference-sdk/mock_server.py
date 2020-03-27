@@ -46,7 +46,7 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
     dirname = os.path.dirname(__file__)
     filename = os.path.join(dirname, 'BinaryCOVID-19Classifier.h5')
 
-    class_list = ['COVID-19','Other']
+    class_list = ['Positive','Negative']
     model = tf.keras.models.load_model(filename)
     prediction,sopid,top_left,bottom_right = [],[],[],[]
 
