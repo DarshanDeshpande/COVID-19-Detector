@@ -32,9 +32,6 @@ I would appreciate it if this model is tested on further data because for now th
 2. 'Multi-Label' for Multi-Class Classification 
 ```
 
-# Model Architecture
-![Model Architecture](https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/ModelArchitecture.png)
-
 # DATA USED <br>
   1. <a href=https://github.com/ieee8023/covid-chestxray-dataset>COVID-19 Xray images</a>
   2. <a href=https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia>Paul Mooney's Amazing Pneumonia Dataset</a>
