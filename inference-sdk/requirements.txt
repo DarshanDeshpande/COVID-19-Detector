@@ -5,3 +5,8 @@ pydicom
 pyyaml
 requests-toolbelt
 SimpleITK
+opencv-python
+tensorflow
+glob3
+mudicom
+Pillow
