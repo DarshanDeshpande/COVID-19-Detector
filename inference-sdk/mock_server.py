@@ -62,11 +62,8 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
         dcm = pydicom.read_file(dicom_instance)
         img = dcm.pixel_array
         img = numpy.expand_dims(img,axis=-1)
-        print(img.shape)
         image = tf.image.resize(img,(300,400))
         image = numpy.expand_dims(image.numpy(),axis=0)
-        print(image.shape)
-
         pred = model.predict_classes(image)
         pred = class_list[pred[0]]
         prediction.append(pred)
