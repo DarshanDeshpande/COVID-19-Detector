@@ -19,7 +19,6 @@ from utils import tagged_logger
 
 # ensure logging is configured before flask is initialized
 
-
 with open('logging.yaml', 'r') as f:
     conf = yaml.safe_load(f.read())
     logging.config.dictConfig(conf)
@@ -44,7 +43,7 @@ def get_empty_response():
 def get_bounding_box_2d_response(json_input, dicom_instances):
 
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, 'BinaryCOVID-19Classifier.h5')
+    filename = os.path.join(dirname, 'BinaryClassifier.h5')
 
     class_list = ['Positive','Negative']
     model = tf.keras.models.load_model(filename)
@@ -62,8 +61,8 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
         img = numpy.expand_dims(img,axis=-1)
         image = tf.image.resize(img,(300,400))
         image = numpy.expand_dims(image.numpy(),axis=0)
-        pred = model.predict_classes(image)
-        pred = class_list[pred[0]]
+        pred = model.predict(image)
+        pred = class_list[numpy.argmax(pred[0])]
         prediction.append(pred)
         sopid.append(dcm.SOPInstanceUID)
         top_left.append([0,0])
