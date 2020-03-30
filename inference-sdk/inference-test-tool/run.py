@@ -26,12 +26,12 @@ import test_inference_mask
 
 from utils import load_image_data, sort_images
 
-def upload_study_me(file_path, is_segmentation_model, host, port):
+def upload_study_me(file_path,host, port):
     file_dict = []
     headers = {'Content-Type': 'multipart/related; '}
     request_json = {'request': 'post', 
                     'route': '/',
-                    'inference_command': 'get-probability-mask' if is_segmentation_model else 'get-bounding-box-2d'}
+                    'inference_command': 'get-bounding-box-2d'}
     
     images = load_image_data(file_path)
     images = sort_images(images)
@@ -75,35 +75,10 @@ def upload_study_me(file_path, is_segmentation_model, host, port):
 
     json_response = json.loads(multipart_data.parts[0].text)
     print("JSON response:", json_response)
-    mask_count = len(json_response["parts"])
-
-    masks = [np.frombuffer(p.content, dtype=np.uint8) for p in multipart_data.parts[1:mask_count+1]]
-
-    if is_segmentation_model:
-        output_folder = 'output'
-
-        if images[0].position is None:
-            # We must sort the images by their instance UID based on the order of the response:
-            identifiers = [part['dicom_image']['SOPInstanceUID'] for part in json_response["parts"]]
-            filtered_images = []
-            for id in identifiers:
-                image = next((img for img in images if img.instanceUID == id))
-                filtered_images.append(image)
-            test_inference_mask.generate_images_for_single_image_masks(filtered_images, masks, output_folder)
-        else:
-            test_inference_mask.generate_images_with_masks(images, masks, output_folder)
-
-        print("Segmentation mask images generated in folder: {}".format(output_folder))
-        print("Saving output masks to files 'output/output_masks_*.npy")
-        for index, mask in enumerate(masks):
-            mask.tofile('output/output_masks_{}.npy'.format(index + 1))
-
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("file_path", help="Path to dicom directory to upload.")
-    parser.add_argument("-s", "--segmentation_model", default=False, help="If the model's output is a segmentation mask", 
-        action='store_true')
     parser.add_argument("--host", default='arterys-inference-sdk-server', help="Host where inference SDK is hosted")
     parser.add_argument("-p", "--port", default='8000', help="Port of inference SDK host")
     args = parser.parse_args()
@@ -112,4 +87,4 @@ def parse_args():
 
 if __name__ == '__main__':
     args = parse_args()
-    upload_study_me(args.file_path, args.segmentation_model, args.host, args.port)
+    upload_study_me(args.file_path,args.host, args.port)

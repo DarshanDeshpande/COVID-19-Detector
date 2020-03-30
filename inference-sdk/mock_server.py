@@ -4,20 +4,18 @@ Demo script that starts a server which exposes liver segmentation.
 Based off of https://github.com/morpheus-med/vision/blob/master/ml/experimental/research/prod/model_gateway/ucsd_server.py
 """
 
-import functools
-import logging
 import logging.config
 import os
-import tempfile
-import yaml
-import json
 import numpy
 import pydicom
 import tensorflow as tf
-from utils.image_conversion import convert_to_nifti
+import yaml
 from utils import tagged_logger
 
 # ensure logging is configured before flask is initialized
+
+
+os.environ['S3_AUDIT_BUCKET_NAME'] = 'arterys-inference-sdk-audit-dev-account'
 
 with open('logging.yaml', 'r') as f:
     conf = yaml.safe_load(f.read())
@@ -27,7 +25,7 @@ logger = logging.getLogger('inference')
 
 # pylint: disable=import-error,no-name-in-module
 from gateway import Gateway
-from flask import make_response
+
 
 def handle_exception(e):
     logger.exception('internal server error %s', e)
@@ -47,7 +45,6 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
 
     class_list = ['Positive','Negative']
     model = tf.keras.models.load_model(filename)
-    prediction,sopid,top_left,bottom_right = [],[],[],[]
 
     response_json = {
             'protocol_version': '1.0',
@@ -63,49 +60,12 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
         image = numpy.expand_dims(image.numpy(),axis=0)
         pred = model.predict(image)
         pred = class_list[numpy.argmax(pred[0])]
-        prediction.append(pred)
-        sopid.append(dcm.SOPInstanceUID)
-        top_left.append([0,0])
-        bottom_right.append([img.shape[0],img.shape[1]])
-
-    for i in range(len(prediction)):
-        response_json['bounding_boxes_2d'].append({"label": prediction[i],
-            "SOPInstanceUID": sopid[i],
-            "top_left": top_left[i],
-            "bottom_right": bottom_right[i]})
+        response_json['bounding_boxes_2d'].append({"label": pred,
+            "SOPInstanceUID": dcm.SOPInstanceUID,
+            "top_left": [0,0],
+            "bottom_right": [img.shape[0],img.shape[1]]})
 
     return response_json, []
-
-def get_probability_mask_response(json_input, dicom_fpath_list):
-    response_json = {
-            'protocol_version': '1.0',
-            'parts': [
-                {
-                    'label': 'Mock seg',
-                    'binary_type': 'probability_mask',
-                    'binary_data_shape': {
-                        'timepoints': 1,
-                        'depth': json_input['depth'],
-                        'width': json_input['width'],
-                        'height': json_input['height']
-                    }
-                }
-            ]
-    }
-
-    array_shape = (json_input['depth'], json_input['height'], json_input['width'])
-    
-    # This code produces a mask that grows from the center of the image outwards as the image slices advance
-    mask = numpy.zeros(array_shape, dtype=numpy.uint8)
-    mid_x = int(json_input['width'] / 2)
-    mid_y = int(json_input['height'] / 2)
-    for s in range(json_input['depth']):
-        offset_x = int(s / json_input['depth'] * mid_x)
-        offset_y = int(s / json_input['depth'] * mid_y)
-        indices = numpy.ogrid[mid_y - offset_y : mid_y + offset_y, mid_x - offset_x : mid_x + offset_x]
-        mask[s][tuple(indices)] = 255
-
-    return response_json, [mask]
 
 
 def request_handler(json_input, dicom_instances, input_digest):
@@ -116,14 +76,8 @@ def request_handler(json_input, dicom_instances, input_digest):
     transaction_logger.add_tags({ 'input_hash': input_digest })
     transaction_logger.info('mock_model received json_input={}'.format(json_input))
 
-    # If your model accepts Nifti files as input then uncomment the following lines:
-    # convert_to_nifti(dicom_instances, 'nifti_output.nii')
-    # print("Converted file to nifti 'nifti_output.nii'")
-    
     if json_input['inference_command'] == 'get-bounding-box-2d':
         return get_bounding_box_2d_response(json_input, dicom_instances)
-    elif json_input['inference_command'] == 'get-probability-mask':
-        return get_probability_mask_response(json_input, dicom_instances)
     else:
         return get_empty_response()
 

@@ -5,8 +5,6 @@ This script lets you test if the inference outputs will be processed correctly b
 import os
 import subprocess
 import argparse
-import random
-
 import numpy as np
 import matplotlib.pyplot as plt
 import pydicom
@@ -97,15 +95,12 @@ def generate_images_for_single_image_masks(dicom_images, inference_results, outp
         pixels = _get_pixels(dcm)
         max_value = np.iinfo(pixels.dtype).max
 
-        # get mask for this image
         image_mask = mask
         pixels = np.reshape(pixels, (-1, 3))
 
-        # apply mask
         pixels[image_mask > 128] = pixels[image_mask > 128] * (1 - mask_alpha) + \
             (mask_alpha * np.array(get_colors(0, max_value)).astype(np.float)).astype(np.uint8)
-            
-        # write image to output folder
+
         output_filename = os.path.join(output_folder, str(index) + os.path.basename(os.path.normpath(image.path)))
         output_filename += '.png'
         
