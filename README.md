@@ -1,17 +1,18 @@
 # COVID-19-Detector
 The World's best Doctors are currently working on finding and testing the cure to the COVID-19 virus. In the middle of all of this, some countries are unable to find testing kits for the virus, making it really difficult to curb it's spread. In the hopes of helping and contributing an easier detection method, I recently got my hands on a X-Ray Dataset of COVID-19 patients(Huge thanks to <a href=https://github.com/ieee8023>ieee8023</a>). <br>
 In this matter, the biggest task for a machine to classify COVID would be to differentiate between a Bacterial Pneumonia and a Viral pneumonia like COVID-19's because both of their symptoms are similar upto a large extent. So here I am showing you my ML model which can differentiate betweeen a normal person, a person with bacterial pneumonia and a person with COVID-19.<br>
-There is also a model for binary classification for COVID-19 Diagnostics made for research purposes but works just as well if not better.
+There is also a model for binary classification for COVID-19 Diagnostics made for research purposes
 
+![Depthwise-Convolution](https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/ModelExpanded.png)
 ![Visualisation](https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/Visualisation.png)
 
 # Testing scores(All metrics are weighted because of the intial class imbalance):
 <b>Binary Classification</b><br>
-   1.<b>Accuracy</b>- 0.9621318373071529 <br>
-   2. <b>Precision</b>- 0.9629629629629629 <br>
-   3. <b>Recall</b>- 0.9629629629629629 <br>
-   4. <b>F1-Score</b> - 0.9629629629629629 <br>
-   5. <b>AUC</b> - 0.9621318373071529 <br><br>
+   1.<b>Accuracy</b>- 0.9866071343421936 <br>
+   2. <b>Precision</b>- 0.9866071343421936 <br>
+   3. <b>Recall</b>- 0.9866071343421936 <br>
+   4. <b>F1-Score</b> - 0.9866071343421936 <br>
+   5. <b>AUC</b> - 0.9993798732757568 <br><br>
    <b>Multi-Label Classification</b><br>
    1.<b>Accuracy</b>- 0.8564749883122955 <br>
    2. <b>Precision</b>- 0.8774582560296846 <br>
@@ -31,6 +32,14 @@ I would appreciate it if this model is tested on further data because for now th
 1. 'Binary' for Binary Classification
 2. 'Multi-Label' for Multi-Class Classification 
 ```
+
+# Model Architecture:
+The model uses Depthwise Convolutions extensively along with Convolutions in a unit. The features are first extracted using a 2D Convolution layer which are then passed on to the Depthwise Layer where the model learns about features like hazy areas need more attention and focuses more attention on the centre and edges of the Chest (near the cardiophrenic and costophrenic angle areas)as a common trend used by doctors too. These features are now convolved again through another set of filters. This unit is coupled with similar units and repeated thrice. This configuration has proved to be extremely efficient and has yet turned out to be the best Binary model of mine. <br>
+<b> NOTE: This has only been tested on unknown sample images received from <a href=https://github.com/ieee8023/covid-chestxray-dataset>@ieee8023's</a> and <a href=https://twitter.com/ChestImaging/status/1243928581983670272>this</a> twitter post's images. Further testing is essential before concrete claims <b>
+   
+Full Architecture is attached below: <br>
+![Model Architecture](https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/ModelArchitecture.png)
+
 
 # DATA USED <br>
   1. <a href=https://github.com/ieee8023/covid-chestxray-dataset>COVID-19 Xray images</a>
