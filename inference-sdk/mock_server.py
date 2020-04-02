@@ -1,6 +1,5 @@
 """
 Demo script that starts a server which exposes liver segmentation.
-
 Based off of https://github.com/morpheus-med/vision/blob/master/ml/experimental/research/prod/model_gateway/ucsd_server.py
 """
 
@@ -14,8 +13,6 @@ from utils import tagged_logger
 
 # ensure logging is configured before flask is initialized
 
-
-os.environ['S3_AUDIT_BUCKET_NAME'] = 'arterys-inference-sdk-audit-dev-account'
 
 with open('logging.yaml', 'r') as f:
     conf = yaml.safe_load(f.read())
@@ -43,7 +40,6 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
     dirname = os.path.dirname(__file__)
     filename = os.path.join(dirname, 'BinaryClassifier.h5')
 
-    class_list = ['Positive','Negative']
     model = tf.keras.models.load_model(filename)
 
     response_json = {
@@ -59,8 +55,12 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
         image = tf.image.resize(img,(300,400))
         image = numpy.expand_dims(image.numpy(),axis=0)
         pred = model.predict(image)
-        pred = class_list[numpy.argmax(pred[0])]
-        response_json['bounding_boxes_2d'].append({"label": pred,
+        if pred[0] < 0.35:
+            label = 'Negative'
+        else:
+            label = 'Positive'
+
+        response_json['bounding_boxes_2d'].append({"label": label,
             "SOPInstanceUID": dcm.SOPInstanceUID,
             "top_left": [0,0],
             "bottom_right": [img.shape[0],img.shape[1]]})
