@@ -4,7 +4,7 @@ In this matter, the biggest task for a machine to classify COVID would be to dif
 There is also a model for binary classification for COVID-19 Diagnostics made for research purposes
 
 ![Depthwise-Convolution](https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/ModelExpanded.png) <br>
-<img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/Visualisation.png width=450 height=450>  <img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/GradientVisualisations/COVID-19-6.jpeg width=250 height=450>
+&nbsp; &nbsp; &nbsp; <img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/Architecture.png class="center">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/GradientVisualisations/COVID-19-6.jpeg width=250 height=450>
 
 # Testing scores(All metrics are weighted because of the intial class imbalance):
 <b>Binary Classification</b><br>
@@ -35,7 +35,7 @@ I would appreciate it if this model is tested on further data because for now th
 3. After the individual results are displayed, you can choose whether to visualise the gradients of the model. If you do then a window will pop up with the image and it's attention gradients. You can move on to the next image by pressing the ESC key.
 
 # Model Architecture:
-The model uses Depthwise Convolutions extensively along with Convolutions in a unit. The features are first extracted using a 2D Convolution layer which are then passed on to the Depthwise Layer where the model learns about features like hazy areas need more attention and focuses more attention on the centre and edges of the Chest (near the cardiophrenic and costophrenic angle areas)as a common trend used by doctors too. These features are now convolved again through another set of filters. This unit is coupled with similar units and repeated thrice. This configuration has proved to be extremely efficient and has yet turned out to be the best Binary model of mine. <br>
+The model uses Depthwise Convolutions extensively along with Convolutions in a unit. This attempts to reverse the architecture of a Separable Convolutional Layer since grayscale images are faster to load and X-ray images usually aren't RGB. The features are first extracted using a 2D Convolution layer which are then passed on to the Depthwise Layer where the model learns about features like hazy areas need more attention and focuses more attention on the centre and edges of the Chest (near the cardiophrenic and costophrenic angle areas)as a common trend used by doctors too. This unit is coupled with similar units and repeated multiple times. This configuration has proved to be extremely efficient and has yet turned out to be the best Binary model of mine, predicting only a single image incorrectly out of the 35 or so COVID-19 images tested by me. <br><br>
 <b> NOTE: This has only been tested on unknown sample images received from <a href=https://github.com/ieee8023/covid-chestxray-dataset>@ieee8023's</a> and <a href=https://twitter.com/ChestImaging/status/1243928581983670272>this</a> twitter post's images. Further testing is essential before concrete claims <b>
    
 Full Architecture is attached below: <br>
