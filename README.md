@@ -4,7 +4,7 @@ In this matter, the biggest task for a machine to classify COVID would be to dif
 There is also a model for binary classification for COVID-19 Diagnostics made for research purposes
 
 ![Depthwise-Convolution](https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/ModelExpanded.png) <br>
-<img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/Visualisation.png width=450 height=450>     <img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/GradientVisualisation.png width=250 height=450>
+<img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/Visualisation.png width=450 height=450>  <img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/GradientVisualisations/COVID-19-6.jpeg width=250 height=450>
 
 # Testing scores(All metrics are weighted because of the intial class imbalance):
 <b>Binary Classification</b><br>
