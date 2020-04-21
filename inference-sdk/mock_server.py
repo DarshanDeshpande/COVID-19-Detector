@@ -10,9 +10,10 @@ import pydicom
 import tensorflow as tf
 import yaml
 from utils import tagged_logger
+import zipfile
 
 # ensure logging is configured before flask is initialized
-
+os.environ['S3_AUDIT_BUCKET_NAME'] = 'arterys-inference-sdk-audit-dev-account'
 
 with open('logging.yaml', 'r') as f:
     conf = yaml.safe_load(f.read())
@@ -37,8 +38,13 @@ def get_empty_response():
 
 def get_bounding_box_2d_response(json_input, dicom_instances):
 
-    dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, 'BinaryClassifier.h5')
+    # dirname = os.path.dirname(__file__)
+    # filename = os.path.join(dirname, 'BinaryClassifier.h5')
+    if not os.path.exists(os.path.join(os.path.dirname(os.path.realpath(__file__)),'SecondPrunedResnet.h5')):
+        with zipfile.ZipFile('COVID-Resnet.zip', 'r') as zipObj:
+            zipObj.extractall()
+            print("Extracted model successfully")
+    filename = os.path.join(os.path.dirname(os.path.realpath(__file__)),'SecondPrunedResnet.h5')
 
     model = tf.keras.models.load_model(filename)
 
@@ -52,11 +58,12 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
         dcm = pydicom.read_file(dicom_instance)
         img = dcm.pixel_array
         image = tf.expand_dims(img,axis=-1)
+        image = tf.image.resize(image,(200,200))
+        image = tf.image.grayscale_to_rgb(image)
         image = tf.cast(image,tf.float32)*(1./255)
-        image = tf.image.resize(image,(400,500))
         image = tf.expand_dims(image,axis=0)
         pred = model.predict(image)
-        if pred[0] < 0.35:
+        if pred[0] < 0.3:
             label = 'Negative'
         else:
             label = 'Positive'
