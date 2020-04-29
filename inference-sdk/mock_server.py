@@ -38,13 +38,13 @@ def get_empty_response():
 
 def get_bounding_box_2d_response(json_input, dicom_instances):
 
-    # dirname = os.path.dirname(__file__)
-    # filename = os.path.join(dirname, 'BinaryClassifier.h5')
-    if not os.path.exists(os.path.join(os.path.dirname(os.path.realpath(__file__)),'SecondPrunedResnet.h5')):
-        with zipfile.ZipFile('COVID-Resnet.zip', 'r') as zipObj:
-            zipObj.extractall()
-            print("Extracted model successfully")
-    filename = os.path.join(os.path.dirname(os.path.realpath(__file__)),'SecondPrunedResnet.h5')
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, 'OpacityDetector.h5')
+    # if not os.path.exists(os.path.join(os.path.dirname(os.path.realpath(__file__)),'SecondPrunedResnet.h5')):
+    #     with zipfile.ZipFile('COVID-Resnet.zip', 'r') as zipObj:
+    #         zipObj.extractall()
+    #         print("Extracted model successfully")
+    # filename = os.path.join(os.path.dirname(os.path.realpath(__file__)),'SecondPrunedResnet.h5')
 
     model = tf.keras.models.load_model(filename)
 
@@ -58,7 +58,7 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
         dcm = pydicom.read_file(dicom_instance)
         img = dcm.pixel_array
         image = tf.expand_dims(img,axis=-1)
-        image = tf.image.resize(image,(200,200))
+        image = tf.image.resize(image,(400,400))
         image = tf.image.grayscale_to_rgb(image)
         image = tf.cast(image,tf.float32)*(1./255)
         image = tf.expand_dims(image,axis=0)
