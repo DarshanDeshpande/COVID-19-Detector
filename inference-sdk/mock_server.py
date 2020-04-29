@@ -13,7 +13,6 @@ from utils import tagged_logger
 import zipfile
 
 # ensure logging is configured before flask is initialized
-os.environ['S3_AUDIT_BUCKET_NAME'] = 'arterys-inference-sdk-audit-dev-account'
 
 with open('logging.yaml', 'r') as f:
     conf = yaml.safe_load(f.read())
