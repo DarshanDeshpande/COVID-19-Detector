@@ -31,8 +31,7 @@ def predict(model, file_path, choice,verbose=1):
             print(i, '-->', pred,pred1)
         predictions.append(pred)
         y_pred.append(pred1)
-    if verbose==1:
-        print(Counter(predictions))
+    print(Counter(predictions))
     if invalid_format_counter!=0:
         print("Skipped predictions on {} images due to invalid file formats. Please use Supported formats only(jpeg,png,jpg,jfif)".format(invalid_format_counter))
     return images,y_pred
