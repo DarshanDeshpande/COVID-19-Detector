@@ -39,14 +39,7 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
 
     dirname = os.path.dirname(__file__)
     filename_custom = os.path.join(dirname, 'OpacityDetector.h5')
-    if not os.path.exists(os.path.join(os.path.dirname(os.path.realpath(__file__)),'SecondPrunedResnet.h5')):
-        with zipfile.ZipFile('COVID-Resnet.zip', 'r') as zipObj:
-            zipObj.extractall()
-            print("Extracted model successfully")
-    filename_resnet = os.path.join(os.path.dirname(os.path.realpath(__file__)),'SecondPrunedResnet.h5')
-
     model_custom = tf.keras.models.load_model(filename_custom)
-    model_resnet = tf.keras.models.load_model(filename_resnet)
 
     response_json = {
             'protocol_version': '1.0',
@@ -59,18 +52,10 @@ def get_bounding_box_2d_response(json_input, dicom_instances):
         img = dcm.pixel_array
         img = tf.expand_dims(img,axis=-1)
 
-        image = tf.image.resize(img,(200,200))
-        image = tf.image.grayscale_to_rgb(image)
-        image = tf.cast(image,tf.float32)*(1./255)
-        image = tf.expand_dims(image,axis=0)
-        pred_resnet = model_resnet.predict(image,verbose=0)
-
         image = tf.image.resize(img,(400,400))
         image = tf.cast(image,tf.float32)*(1./255)
         image = tf.expand_dims(image,axis=0)
-        pred_custom = model_custom.predict(image,verbose=0)
-
-        pred = numpy.mean([pred_custom,pred_resnet],axis=0)
+        pred = model_custom.predict(image,verbose=0)
 
         if pred[0] < 0.3:
             label = 'Negative'

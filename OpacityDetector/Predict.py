@@ -11,9 +11,9 @@ import tqdm
 def predict(model, file_path, choice,verbose=1):
     images,predictions,y_pred = [],[],[]
     if any(x in choice.lower() for x in ['resnet','1']):
-        dim, channels = (200, 200), 3
+        dim, channels,flag = (200, 200), 3,0
     else:
-        dim, channels = (400, 400), 1
+        dim, channels,flag = (400, 400), 1,1
     invalid_format_counter = 0
     for i in tqdm.tqdm(glob.glob(file_path + '\\*')):
         if i.split('\\')[-1].split('.')[-1].lower() not in ['jpeg','jpg','png','jfif']:
@@ -31,7 +31,10 @@ def predict(model, file_path, choice,verbose=1):
             print(i, '-->', pred,pred1)
         predictions.append(pred)
         y_pred.append(pred1)
-    print(Counter(predictions))
+    if flag==0:
+        print("COVID-Resnet: ",Counter(predictions))
+    elif flag==1:
+        print("Custom Model: ",Counter(predictions))
     if invalid_format_counter!=0:
         print("Skipped predictions on {} images due to invalid file formats. Please use Supported formats only(jpeg,png,jpg,jfif)".format(invalid_format_counter))
     return images,y_pred
@@ -71,9 +74,10 @@ def ensemble(model1,model2,file_path,verbose=0):
     ensembled_result = np.mean([y_pred1,y_pred2],axis=0)
     return links,ensembled_result
 
+
 if __name__ == '__main__':
     directory = str(input("Enter path to the directory which contains the images: "))
-    choice = str(input("Which model to use? \n1. COVID-Resnet\n2. Custom(Recommended)\n3. Ensemble (Slower but more accurate)")).lower()
+    choice = str(input("Which model to use? \n1. COVID-Resnet\n2. Custom(Recommended)\n3. Ensemble (Slower, usually more accurate)")).lower()
     verbose = str(input("Enable verbose?(Y/N)")).lower()
     verbose = 1 if verbose=='y' else 0
 
@@ -131,3 +135,26 @@ if __name__ == '__main__':
             display(links,model,str(choice),layer_name)
         else:
             exit(0)
+
+
+# Pattern for the following predictions - COVID-Resnet,Custom Model,Ensembled
+
+# NORMAL TEST CASES
+# Counter({'Negative': 2937, 'Positive': 64})
+# Counter({'Negative': 2960, 'Positive': 41})
+# Ensembling Results: Counter({'Negative': 2928, 'Positive': 73})
+
+# RECENT COVID-19 TEST CASES
+# Counter({'Positive': 13, 'Negative': 5})
+# Counter({'Positive': 17, 'Negative': 1})
+# Ensembling Results: Counter({'Positive': 17, 'Negative': 1})
+
+# COVID-19 POSITIVE CASES
+# Counter({'Positive': 120, 'Negative': 22})
+# Counter({'Positive': 128, 'Negative': 14})
+# Ensembling Results: Counter({'Positive': 134, 'Negative': 8})
+
+# VUNO OPACITY DATA
+# Counter({'Negative': 12}) Poor accuracy due to pruning I assume. Needs more work
+# Counter({'Positive': 12})
+# Ensembling Results: Counter({'Positive': 11, 'Negative': 1})
