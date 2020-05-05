@@ -31,10 +31,10 @@ The model uses an Inception/Xception Model like approach for Classification. The
    5. <b>AUC</b> - 0.9890 <br><br>
 
 <br> &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;***Training Graphs***<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/TrainingGraph.png width=700 height=370 class="center">
+<img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/TrainingGraph.png  class="center">
 <br><br>
 <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;***Prediction Visualisations***<br>
-&nbsp; &nbsp; &nbsp; &nbsp;<img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/Visualisations.png width=700 height=370 class="center">
+&nbsp; &nbsp; &nbsp; &nbsp;<img src=https://github.com/DarshanDeshpande/COVID-19-Detector/blob/master/images/Visualisations.png  class="center">
 
 This result has been checked multiple times on unseen images and so far, for all the testing datasets, the model is able to score similarly.<br>
 It will be much appreciated if this model can be tested on further data because for now the small COVID-dataset available might not be a true test for it
