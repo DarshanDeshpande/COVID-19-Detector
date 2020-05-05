@@ -8,6 +8,7 @@ from GradientVisualiser import GradCAM
 import cv2, imutils
 import tqdm
 
+
 def predict(model, file_path, choice,verbose=1):
     images,predictions,y_pred = [],[],[]
     if any(x in choice.lower() for x in ['resnet','1']):
@@ -67,6 +68,7 @@ def display(links, model, category, layer_name):
         cv2.imshow(j.split('\\')[-1], output1)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
 
 def ensemble(model1,model2,file_path,verbose=0):
     links,y_pred1 = predict(model1,file_path,'resnet',verbose=verbose)
