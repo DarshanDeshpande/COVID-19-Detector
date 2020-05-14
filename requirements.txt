@@ -1,5 +1,5 @@
 tensorflow==2.1.0
 numpy
-glob
+glob3
 pip install opencv-python
 tqdm

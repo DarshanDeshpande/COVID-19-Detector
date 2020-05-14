@@ -16,7 +16,7 @@ def predict(model, file_path, choice,verbose=1):
     else:
         dim, channels,flag = (400, 400), 1,1
     invalid_format_counter = 0
-    for i in tqdm.tqdm(glob.glob(file_path + '\\*')):
+    for i in tqdm.tqdm(glob.glob(os.path.join(file_path,'*'))):
         if i.split('\\')[-1].split('.')[-1].lower() not in ['jpeg','jpg','png','jfif']:
             print("Invalid file format '{}' for file: {}. Supported formats: jpeg,png,jpg,jfif. Skipping current file".format(i.split('\\')[-1].split('.')[-1],i))
             invalid_format_counter +=1
@@ -127,14 +127,10 @@ if __name__ == '__main__':
     else:
         links,_ = predict(model, directory, choice.lower(),verbose=verbose)
 
-        for i in reversed(model.layers):
-            if len(i.output.shape)==4:
-                layer_name = i.name
-                break
         visualise_choice = str(input("Do you want to visualise gradients? (Y/N)")).lower()
         if visualise_choice == 'y':
             print("Press any key to view the next image")
-            display(links,model,str(choice),layer_name)
+            display(links,model,str(choice),None)
         else:
             exit(0)
 
