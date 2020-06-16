@@ -8,7 +8,6 @@ from GradientVisualiser import GradCAM
 import cv2, imutils
 import tqdm
 
-
 def predict(model, file_path, choice,verbose=1):
     images,predictions,y_pred = [],[],[]
     if any(x in choice.lower() for x in ['resnet','1']):
@@ -135,24 +134,14 @@ if __name__ == '__main__':
             exit(0)
 
 
-# Pattern for the following predictions - COVID-Resnet,Custom Model,Ensembled
-
 # NORMAL TEST CASES
-# Counter({'Negative': 2937, 'Positive': 64})
-# Counter({'Negative': 2960, 'Positive': 41})
-# Ensembling Results: Counter({'Negative': 2928, 'Positive': 73})
+# Custom Model: Counter({'Negative': 2945, 'Positive': 56})
+# Ensembling Results: Counter({'Negative': 2748, 'Positive': 253})
 
-# RECENT COVID-19 TEST CASES
-# Counter({'Positive': 13, 'Negative': 5})
-# Counter({'Positive': 17, 'Negative': 1})
-# Ensembling Results: Counter({'Positive': 17, 'Negative': 1})
-
-# COVID-19 POSITIVE CASES
-# Counter({'Positive': 120, 'Negative': 22})
-# Counter({'Positive': 128, 'Negative': 14})
-# Ensembling Results: Counter({'Positive': 134, 'Negative': 8})
+# COVID-19 TEST SET
+# Custom Model: Counter({'Positive': 37, 'Negative': 6})
+# Ensembling Results: Counter({'Positive': 41, 'Negative': 2})
 
 # VUNO OPACITY DATA
-# Counter({'Negative': 12}) Poor accuracy due to pruning I assume. Needs more work
-# Counter({'Positive': 12})
-# Ensembling Results: Counter({'Positive': 11, 'Negative': 1})
+# Custom Model: Counter({'Positive': 9, 'Negative': 3})
+# Ensembling Results: Counter({'Positive': 8, 'Negative': 4})
